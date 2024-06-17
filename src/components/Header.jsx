@@ -75,7 +75,7 @@ const Header = ({ customPlaylists, setCustomPlaylists }) => {
     return (
         <header id='header' role='banner'>
             <h1 className='logo'>
-                <Link to='/'><IoMusicalNotes />나의 뮤직 챠트</Link>
+                <Link to='/'><IoMusicalNotes />Playlist</Link>
             </h1>
             <h2>chart</h2>
             <ul>
