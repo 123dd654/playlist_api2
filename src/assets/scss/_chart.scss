@@ -41,8 +41,8 @@
   }
   
   .record-player-text {
-    margin-right: 20px;
-    font-size: 24px;
+    // margin-right: 20px;
+    font-size: 4rem;
     font-weight: bold;
     color: var(--stroke);
   }
@@ -51,8 +51,8 @@
     height: calc(var(--size) * 1vmin);
     width: calc(var(--size) * 1vmin);
     position: fixed;
-    top: 24%;
-    left: 50%;
+    top: 40%;
+    left: 40%;
     transform: translate(-50%, -50%);
     display: none;
   }

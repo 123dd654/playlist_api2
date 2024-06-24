@@ -356,7 +356,7 @@ const Home = () => {
     <>
       <div className="record-player-container">
         <div className="record-player-text">
-          Your Text Here
+          welcoem to SY_playlist
         </div>
         <svg className="record-player" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.25 105.25" style={{ width: '200px', height: '200px', overflow: 'visible' }}>
           <g transform="translate(310.848 60.185)">
