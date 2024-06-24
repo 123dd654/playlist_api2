@@ -232,7 +232,7 @@
   }
   
   .playlist {
-    margin-top: 400px;
+    margin-top: 330px;
     height: 60vh; /* 스크롤 가능하도록 높이 설정 */
     overflow-y: scroll; /* 세로 스크롤 활성화 */
     display: grid;
@@ -259,6 +259,8 @@
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
+
+    
   }
   
   .artist {
@@ -273,9 +275,10 @@
       justify-content: space-between;
   
       h2 {
-        margin-left: 40px;
+        margin-left: 60px;
         font-size: 2rem;
         font-weight: 900;
+
       }
     }
   }
@@ -378,7 +381,7 @@
     right: 400px;
     bottom: 0;
     height: 370px;
-    background-color: var(--pointBg);
+    background-color: #e2e2e2;
     padding: 2rem;
   
     h3 {
@@ -393,6 +396,10 @@
       font-family: var(--fontJ);
       font-weight: 300;
       height: 44px;
+
+      &:hover{
+        background: linear-gradient(90deg, #5779FF 0%, #7E56FF 100%);
+      }
   
       .img {
         width: 44px;

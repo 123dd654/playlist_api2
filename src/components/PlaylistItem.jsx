@@ -1,6 +1,7 @@
 import React from 'react';
+import { IoPlayCircle } from 'react-icons/io5';
 
-const PlaylistItem = ({ item }) => {
+const PlaylistItem = ({ item, onPlay }) => {
   return (
     <div className="playlist-item">
       <iframe
@@ -14,6 +15,10 @@ const PlaylistItem = ({ item }) => {
       ></iframe>
       <div className="title">{item.title}</div>
       <div className="artist">{item.artist}</div>
+      <IoPlayCircle 
+        style={{ marginTop: '5px', fontSize: '24px', color: '#5779FF', cursor: 'pointer' }} 
+        onClick={onPlay}
+      />
     </div>
   );
 };

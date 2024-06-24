@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { MusicPlayerContext } from '../context/MusicPlayerProvider';
-import { IoMusicalNotes, IoPlaySkipForward, IoPlaySkipBack, IoPlay, IoPause, IoRepeat, IoShuffleOutline } from 'react-icons/io5';
+import { IoMusicalNotes, IoPlaySkipForward, IoPlaySkipBack, IoPlay, IoPause, IoRepeat, IoShuffleOutline, IoVolumeHigh } from 'react-icons/io5';
 import ReactPlayer from 'react-player';
 
 const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
@@ -24,6 +24,7 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
     } = useContext(MusicPlayerContext);
 
     const [trackList, setTrackList] = useState([]);
+    const [volume, setVolume] = useState(0.8); // Initial volume level
     const currentTrackRef = useRef(null);
     const playerRef = useRef(null);
 
@@ -53,7 +54,18 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
     const handleProgress = (state) => updatePlayed(state.played);
     const handleDuration = (duration) => updateDuration(duration);
     const handleSeekChange = (event) => updatePlayed(parseFloat(event.target.value));
-    const handleSeekMouseUp = (event) => playerRef.current.seekTo(parseFloat(event.target.value));
+    const handleSeekMouseUp = (event) => {
+        if (playerRef.current) {
+            playerRef.current.seekTo(parseFloat(event.target.value));
+        }
+    };
+
+    const handleVolumeChange = (event) => {
+        setVolume(parseFloat(event.target.value));
+        if (playerRef.current) {
+            playerRef.current.setVolume(parseFloat(event.target.value));
+        }
+    };
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -63,7 +75,9 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
 
     const handleTrackEndModified = () => {
         if (isRepeating) {
-            playerRef.current.seekTo(0);
+            if (playerRef.current) {
+                playerRef.current.seekTo(0);
+            }
             playTrack(currentTrackIndex);
         } else {
             handleTrackEnd();
@@ -74,7 +88,7 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
         <aside id="aside">
             <div className="play-now">
                 <h2>
-                <IoMusicalNotes /> play
+                    <IoMusicalNotes /> play
                 </h2>
                 <div className="thumb">
                     <div
@@ -95,6 +109,7 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
                                     onEnded={handleTrackEndModified}
                                     onProgress={handleProgress}
                                     onDuration={handleDuration}
+                                    volume={volume}
                                 />
                             )}
                         </div>
@@ -122,6 +137,15 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
                             value={played}
                             onChange={handleSeekChange}
                             onMouseUp={handleSeekMouseUp}
+                            style={{
+                                background: `linear-gradient(90deg, #5779FF ${played * 100}%, #ccc ${played * 100}%)`,
+                                height: '4px',
+                                width: '100%',
+                                borderRadius: '4px',
+                                appearance: 'none',
+                                outline: 'none',
+                                cursor: 'pointer'
+                            }}
                         />
                     </div>
                     <div className="times">
@@ -145,23 +169,43 @@ const Aside = ({ currentPlaylist, selectedPlaylistState }) => {
                             <IoRepeat />
                         </span>
                     </div>
+                    <div className="volume-control" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px' }}>
+                        <IoVolumeHigh style={{ marginRight: '10px' }} />
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleVolumeChange}
+                            style={{
+                                background: `linear-gradient(90deg, #5779FF ${volume * 100}%, #ccc ${volume * 100}%)`,
+                                height: '4px',
+                                width: '50%',
+                                borderRadius: '4px',
+                                appearance: 'none',
+                                outline: 'none',
+                                cursor: 'pointer'
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
 
             <div className="play-list">
                 <h3><IoMusicalNotes /> Play list</h3>
                 <ul>
-                {musicData.map((track, index) => (
-                    <li
-                    key={index}
-                    ref={index === currentTrackIndex ? currentTrackRef : null}
-                    onClick={() => playTrack(index)}
-                    className={index === currentTrackIndex ? 'current-track' : ''}
-                    >
-                    <span className="img" style={{ backgroundImage: `url(${track.imageURL})` }}></span>
-                    <span className="title">{track.title}</span>
-                    </li>
-                ))}
+                    {musicData.map((track, index) => (
+                        <li
+                            key={index}
+                            ref={index === currentTrackIndex ? currentTrackRef : null}
+                            onClick={() => playTrack(index)}
+                            className={index === currentTrackIndex ? 'current-track' : ''}
+                        >
+                            <span className="img" style={{ backgroundImage: `url(${track.imageURL})` }}></span>
+                            <span className="title">{track.title}</span>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </aside>

@@ -47,8 +47,6 @@ const PlayList = ({ handleDeletePlaylist }) => {
     return (
         <section id="playlist">
             <div className="title">
-                <h2>{playlist.name} 리스트</h2>
-                <button onClick={handleDelete}>플레이리스트 삭제</button>
             </div>
             {playlist.items.length > 0 ? (
                 <Chart
